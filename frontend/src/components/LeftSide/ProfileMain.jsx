@@ -39,10 +39,7 @@ const ProfileMain = () => {
               <MdModeEditOutline size={25} className="color alig content-end" />
             </div>
               <p className="text-black font-normal">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Temporibus sequi minima dignissimos maxime minus praesentium
-                sapiente molestias obcaecati dolorem! Quisquam adipisci eos in
-                explicabo ab vitae magni cumque esse veniam.
+               {user.about ? user.about : ""}
               </p>
           </div>
         </div>

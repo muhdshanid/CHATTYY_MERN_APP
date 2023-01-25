@@ -37,7 +37,7 @@ export const allMessages = asyncHandler(async (req, res) => {
     const allMessages = await 
     PersonalMessageModel.find({ chat: chatId })
     .populate("sender","name profile email")
-    .populate("chat").sort({updatedAt:-1});
+    .populate("chat").sort({updatedAt:1});
     return res.status(200).json(allMessages)
   } catch (error) {
     res.status(500);

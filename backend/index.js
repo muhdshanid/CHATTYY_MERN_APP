@@ -9,6 +9,7 @@ import personalChatRouter from './routes/personalChatRoutes.js'
 import personalMessageRouter from './routes/personalMessageRoutes.js'
 import groupChatRouter from './routes/groupChatRoutes.js'
 import groupMessageRouter from './routes/groupMessageRoutes.js'
+import userRouter from './routes/userRoutes.js'
  
 dotenv.config()
 const app = express()
@@ -22,6 +23,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
  
 app.use("/api/auth",authRouter)
+app.use("/api/user",userRouter)
 app.use("/api/pchat",personalChatRouter)
 app.use("/api/gchat",groupChatRouter)
 app.use("/api/pmsg",personalMessageRouter)

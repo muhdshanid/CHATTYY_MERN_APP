@@ -7,7 +7,7 @@ import MessagesArea from './MessagesArea'
 import { useTransition,animated } from "react-spring";
 import RightSide from '../RightSide/RightSide'
 const CenterMain = () => {
-  const { infoPageOpen,setInfoPageOpen} = useContext(DataContext)
+  const { infoPageOpen,selectedChat,selectedGroup,} = useContext(DataContext)
   const transition = useTransition(infoPageOpen,{
     from:{x:100 ,y:0 ,opacity:0},
     enter:{x:0 ,y:0 ,opacity:1},
@@ -16,19 +16,37 @@ const CenterMain = () => {
   return (
   <>
     <div className={`${infoPageOpen ? "w-full" : " w-full"}  flex `}>
-      <div className={`${infoPageOpen ? "w-[90%]" : 'w-full'} transition-all flex flex-col justify-between`}>
-      <CenterNav/>
-      <MessagesArea/>
-      <MessageInput/>
-      </div>
-    {
-        transition((style,item)=>
-          item ? <animated.div style={style}  className={`transition-all 
-          z-10 bg-white 
-           `}>
-            <RightSide/>
-          </animated.div>  : ""
-        )
+      {
+        selectedChat !== null  ?<> <div className={`${infoPageOpen ? "w-[90%]" : 'w-full'} transition-all flex flex-col justify-between`}>
+        <CenterNav selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        <MessagesArea selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        <MessageInput selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        </div>
+      {
+          transition((style,item)=>
+            item ? <animated.div style={style}  className={`transition-all 
+            z-10 bg-white w-[70%]
+             `}>
+              <RightSide/>
+            </animated.div>  : ""
+          )
+        } 
+        </> : 
+        <> <div className={`${infoPageOpen ? "w-[90%]" : 'w-full'} transition-all flex flex-col justify-between`}>
+        <CenterNav selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        <MessagesArea selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        <MessageInput selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        </div>
+      {
+          transition((style,item)=>
+            item ? <animated.div style={style}  className={`transition-all 
+            z-10 bg-white w-[70%]
+             `}>
+              <RightSide/>
+            </animated.div>  : ""
+          )
+        } 
+        </>
       }
        </div>
     </>

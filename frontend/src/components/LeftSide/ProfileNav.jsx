@@ -3,7 +3,7 @@ import { HiOutlineArrowLeft } from 'react-icons/hi'
 import { DataContext } from '../../context/DataProvider'
 
 const ProfileNav = () => {
-    const {profilePageOpen,setProfilePageOpen} = useContext(DataContext)
+    const {setProfilePageOpen} = useContext(DataContext)
   return (
     <div className='bg h-[4.5rem]  flex gap-2 items-end'>
        <div className='flex gap-4 p-4 '>

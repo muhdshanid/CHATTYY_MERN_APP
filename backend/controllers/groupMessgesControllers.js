@@ -37,7 +37,7 @@ export const allGroupMessages = asyncHandler(async (req, res) => {
     const allGroupMessages = await 
     GroupMessageModel.find({ chat: groupChatId })
     .populate("sender","name profile email")
-    .populate("chat").sort({updatedAt:-1});
+    .populate("chat").sort({updatedAt:1});
     return res.status(200).json(allGroupMessages)
   } catch (error) {
     res.status(500);

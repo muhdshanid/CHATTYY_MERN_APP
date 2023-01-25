@@ -3,8 +3,9 @@ import {createApi,fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const chatService = createApi({
     reducerPath:"chat",
+    tagTypes:"chats",
     baseQuery:fetchBaseQuery({
-        baseUrl:"http://localhost:5000/api/pchat/",
+        baseUrl:"http://localhost:5000/api/",
         prepareHeaders: (headers, { getState }) => {
             const reducers = getState();
             const token = reducers?.authReducer?.token;
@@ -14,27 +15,38 @@ const chatService = createApi({
     }),
     endpoints:(builder) => {
         return {
-            // userSignup: builder.mutation({
-            //     query:(data) => {
-            //         return {
-            //             url:"signup",
-            //             method:"POST",
-            //             body:data
-            //         }
-            //     }
-            // }),
+            createGroup: builder.mutation({
+                query:(data) => {
+                    return {
+                        url:"gchat/access-group-chat",
+                        method:"POST",
+                        body:data
+                    }
+                }
+            }),
             fetchPersonalChats: builder.query({
                 query:() => {
                     return {
-                        url:"fetch-chats",
+                        url:"pchat/fetch-chats",
                         method:"GET",
                     }
-                }
+                },
+                providesTags:["chats"]
+            }),
+            fetchGroupChats: builder.query({
+                query:() => {
+                    return {
+                        url:"gchat/fetch-group-chats",
+                        method:"GET",
+                    }
+                },
+                providesTags:["chats"]
             }),
         }
     }
 })
-export const {useFetchPersonalChatsQuery} = chatService
+export const {useFetchPersonalChatsQuery,useFetchGroupChatsQuery,
+useCreateGroupMutation} = chatService
 
 export default chatService
 
