@@ -86,9 +86,9 @@ const AddGroupMembers = () => {
       </div>
       <div>
       {
-        selectedUsers.length > 0 &&   <div className='flex mb-2 rounded-lg bg-gray-100 items-center'>
+        selectedUsers?.length > 0 &&   <div className='flex mb-2 rounded-lg bg-gray-100 items-center'>
         {
-          selectedUsers.map(user => (
+          selectedUsers?.map(user => (
               <div className='flex mx-2 rounded-lg bg px-2 py-1 items-center'>
               <h6 className='font-semibold text-md text-white'>{user.name}</h6>
               <IoClose onClick={()=>handleUserRemove(user)} size={24} color="white" className="text-white cursor-pointer"/>

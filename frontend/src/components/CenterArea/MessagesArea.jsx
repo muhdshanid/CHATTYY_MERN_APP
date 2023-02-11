@@ -21,7 +21,6 @@ const MessagesArea = ({ selectedChat,selectedGroup }) => {
       setGroupMessages(result)
     }
   },[gettingData,selectedGroup])
-  console.log(selectedGroup);
   return (
     <div className="w-full grow pt-2 overflow-hidden overflow-y-scroll">
      {

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { IoMdMore } from "react-icons/io";
-import { RiMessage2Fill } from "react-icons/ri";
+import { RiChatNewFill, RiMessage2Fill } from "react-icons/ri";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { DataContext } from "../../context/DataProvider";
 import { MdGroupAdd } from "react-icons/md";
@@ -29,7 +29,7 @@ const Navbar = () => {
             onClick={() => setSearchPageOpen(true)}
             className="rounded-full cursor-pointer p-2 hover:bg-gray-100"
           >
-            <RiMessage2Fill className="color" size={27} />
+            <RiChatNewFill className="color" size={27} />
           </div>
           <div  onClick={() => setAddGroupMembersPageOpen(true)}
           className="rounded-full  cursor-pointer p-2 hover:bg-gray-100">

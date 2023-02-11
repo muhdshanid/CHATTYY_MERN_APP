@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
 const Message = ({message}) => {
   const {user} = useSelector(state => state.authReducer)
   let messageTime = new Date(message.createdAt)
@@ -29,9 +28,11 @@ const Message = ({message}) => {
     </div>
     : <div className="w-full flex flex-col justify-center items-end gap-2">
     <div className=" py-2 px-4 rounded-tl-lg  rounded-bl-lg rounded-tr-lg bg shadow-sm ">
-      <p className="text-white max-w-[20rem]">
-        {message.content}
-      </p>
+      {message.content !== "" ? <p className="text-white max-w-[20rem]">
+       {message.content}
+      </p> : message.imageUrl !== "" ? 
+      <img src={message.imageUrl} className="w-[100px] " alt="img-chat" /> : 
+      <audio src={message.audioPath} controls><source type="audio" src={message.audioPath} /></audio>}
     </div>
       <div className="">
       <p className="text-black text-xs font-normal">{messageTime}</p>
@@ -43,3 +44,4 @@ const Message = ({message}) => {
 };
 
 export default Message;
+ 

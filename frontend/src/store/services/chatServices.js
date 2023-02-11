@@ -22,7 +22,18 @@ const chatService = createApi({
                         method:"POST",
                         body:data
                     }
-                }
+                },
+                invalidatesTags:["chats"]
+            }),
+            createChat: builder.mutation({
+                query:(data) => {
+                    return {
+                        url:"pchat/access-chat",
+                        method:"POST",
+                        body:data
+                    }
+                },
+                invalidatesTags:["chats"]
             }),
             fetchPersonalChats: builder.query({
                 query:() => {
@@ -45,7 +56,7 @@ const chatService = createApi({
         }
     }
 })
-export const {useFetchPersonalChatsQuery,useFetchGroupChatsQuery,
+export const {useFetchPersonalChatsQuery,useFetchGroupChatsQuery,useCreateChatMutation,
 useCreateGroupMutation} = chatService
 
 export default chatService

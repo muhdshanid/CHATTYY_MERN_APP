@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const dataFromLocalStorage = localStorage.getItem("userData")
-let userData = JSON.parse(dataFromLocalStorage)
+let userData = dataFromLocalStorage ? JSON.parse(dataFromLocalStorage) : ""
 const authReducer = createSlice({
     name:"authReducer",
     initialState:{
