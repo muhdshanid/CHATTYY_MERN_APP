@@ -78,7 +78,7 @@ const RightSideMain = ({selectedChat,selectedGroup}) => {
       className="w-[10rem]
        h-[10rem] 
           rounded-full shadow-xl"
-      src={dummyProfile}
+      src={selectedGroup.groupProfile}
       alt="profile"
     />
   </div>
@@ -142,8 +142,7 @@ const RightSideMain = ({selectedChat,selectedGroup}) => {
         selectedGroup.groupMembers.map(usr => (
           <div className="flex items-center gap-4">
             <div>
-              <img src={dummyProfile}  className="w-12 h-12 hover:w-14
-                hover:h-14
+              <img src={dummyProfile}  className="w-12 h-12
                 transition-all rounded-full shadow-xl" alt="dp" />
             </div>
             <div>

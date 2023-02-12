@@ -13,7 +13,7 @@ const CenterNav = ({selectedChat,selectedGroup}) => {
        {
         selectedChat !== null && selectedGroup === null ? 
         <div className='my-2  gap-4 flex items-center '>
-        <div>
+        <div onClick={()=>setInfoPageOpen(true)} className="cursor-pointer">
         <img
         className="w-12
          h-12
@@ -22,7 +22,7 @@ const CenterNav = ({selectedChat,selectedGroup}) => {
         alt="profile"
       />
         </div>
-        <div onClick={()=>setInfoPageOpen(true)} className='flex flex-col  justify-center grow'>
+        <div onClick={()=>setInfoPageOpen(true)} className='flex flex-col cursor-pointer  justify-center grow'>
             <h6 className='text-lg font-semibold text-black'>{otherUser[0].name ? otherUser[0].name : ""}</h6>
             <p className='font-normal text-sm '>Online</p>
         </div>
@@ -40,18 +40,18 @@ const CenterNav = ({selectedChat,selectedGroup}) => {
         </div>
     </div> :
      <div className='my-2  gap-4 flex items-center '>
-     <div>
+     <div onClick={()=>setInfoPageOpen(true)} className="cursor-pointer">
      <img
      className="w-12
       h-12
          rounded-full shadow-sm"
-     src={dummyProfile}
+     src={selectedGroup?.groupProfile}
      alt="profile"
    />
      </div>
-     <div onClick={()=>setInfoPageOpen(true)} className='flex flex-col  justify-center grow'>
+     <div onClick={()=>setInfoPageOpen(true)} className='flex flex-col cursor-pointer  justify-center grow'>
          <h6 className='text-lg font-semibold text-black'>{selectedGroup?.groupName}</h6>
-         <p className='font-normal text-sm '>{selectedGroup?.groupMembers?.length}</p>
+         <p className='font-normal text-sm '>{selectedGroup?.groupMembers?.length} Members</p>
      </div>
      <div className='flex  pr-4'>
      <div className='rounded-full p-2 hover:bg-gray-100'>

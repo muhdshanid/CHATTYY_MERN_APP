@@ -22,8 +22,8 @@ export const updateUser = asyncHandler(async(req,res)=>{
    try {
     const user = await UserModel.findById(req.userId)
     if(user){
-        const updateUser = await UserModel.findByIdAndUpdate(req.userId,req.body,{new:true})
-        return res.status(200).json(updateUser)
+        const updateUser = await UserModel.findByIdAndUpdate(req.userId,req.body,{new:true}).select("-password")
+        return res.status(200).json({user:updateUser})
     }else{
         return res.status(404).json("User not found")
     }

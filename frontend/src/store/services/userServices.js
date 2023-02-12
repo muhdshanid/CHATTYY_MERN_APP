@@ -14,15 +14,16 @@ const userService = createApi({
   }),
   endpoints: (builder) => {
     return {
-      // userSignup: builder.mutation({
-      //     query:(data) => {
-      //         return {
-      //             url:"signup",
-      //             method:"POST",
-      //             body:data
-      //         }
-      //     }
-      // }),
+      userUpdate: builder.mutation({
+          query:(data) => {
+              return {
+                  url:"update",
+                  method:"PUT",
+                  body:data
+              }
+          },
+          invalidatesTags: ["users"]
+      }),
       searchUsers: builder.query({
         query: (search) => {
           return {
@@ -35,7 +36,7 @@ const userService = createApi({
     };
   },
 });
-export const { useSearchUsersQuery } =
+export const { useSearchUsersQuery,useUserUpdateMutation } =
   userService;
 
 export default userService;

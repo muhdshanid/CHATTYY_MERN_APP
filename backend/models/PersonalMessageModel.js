@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const personalMessageSchema = new mongoose.Schema({
     sender:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
-    content:{type:String,trim:true,default:""},
-    audioPath:{type:String,default:""},
-    imageUrl:{type:String,default:""},
+    message:{
+        type: Map,
+        of: String,
+    },
     chat:{type:mongoose.Schema.Types.ObjectId,ref:"PersonalChat"},
 },{
     timestamps:true

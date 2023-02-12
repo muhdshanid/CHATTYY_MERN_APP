@@ -21,7 +21,6 @@ const Search = () => {
       refetch()
     }
   }
-  console.log(res);
   useEffect(()=>{
     if(res.isSuccess){
       setSearchPageOpen(false)
@@ -52,7 +51,6 @@ const Search = () => {
         <div className="p-2 mt-2 items-center gap-2 shadow-xl bg-white rounded-lg flex">
         <div>
             <button
-              // onClick={handleSearch}
               className="px-2 py-1  rounded-full  text-white"
             >
               <IoSearchCircleSharp size={30} className="bg rounded-full" color="white"/>

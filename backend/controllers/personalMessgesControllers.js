@@ -7,18 +7,18 @@ dotenv.config()
 
 export const createMessage = asyncHandler(async (req, res) => {
   try {
-    const { content, chatId } = req.body;
-    if (!content || !chatId) {
+    const { message, chatId } = req.body;
+    if (!message || !chatId) {
       console.log("Invalid data passed into request");
       return res.sendStatus(400);
     }
-    let message = {
+    let msg = {
       sender: req.userId,
-      content,
+      message,
       chat: chatId,
     };
     let newMessage = 
-    await PersonalMessageModel.create(message);
+    await PersonalMessageModel.create(msg);
     newMessage = await newMessage.populate("sender", "name profile email");
     newMessage = await newMessage.populate("chat");
     newMessage = await UserModel.populate(newMessage, {

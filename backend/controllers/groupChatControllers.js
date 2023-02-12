@@ -17,11 +17,13 @@ export const accessGroupChats = asyncHandler(async (req, res) => {
     }else{
         const user = await UserModel.findById(req.userId)
         groupMembers.push(user)
+        const groupProfile = req.body.groupProfile
         const description = req.body.description ? req.body.description : ""
         const newGroup = await GroupChatModel.create({
             groupName,
             groupAdmin:user,
             groupMembers,
+            groupProfile,
             description,
         })
         const allGroupChats = await GroupChatModel
