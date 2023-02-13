@@ -25,7 +25,7 @@ const LeftSideMain = () => {
     leave:{x:-100 ,y:0 ,opacity:0},
    })
   return (
-    <div className={`w-[50%] relative  border-r-black`}>
+    <div className={`sm:w-[50%] w-[100%]  relative  border-r-black`}>
         <div className='w-full pl-4'>
         <Navbar/>
         <Chats/>

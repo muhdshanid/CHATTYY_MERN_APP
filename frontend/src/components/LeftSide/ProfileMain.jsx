@@ -109,7 +109,6 @@ const ProfileMain = () => {
            </>
                 :
                 <IoMdCheckmark onClick={()=>updateName()} size={30} className="color cursor-pointer" />
-
               }
               </>
               :

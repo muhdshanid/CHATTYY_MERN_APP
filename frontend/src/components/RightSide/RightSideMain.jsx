@@ -19,7 +19,7 @@ const RightSideMain = ({selectedChat,selectedGroup}) => {
         className="w-[10rem]
          h-[10rem] 
             rounded-full shadow-xl"
-        src={dummyProfile}
+        src={otherUser[0].profile}
         alt="profile"
       />
     </div>

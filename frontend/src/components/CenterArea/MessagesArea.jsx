@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
@@ -21,15 +21,16 @@ const MessagesArea = ({ selectedChat,selectedGroup }) => {
       setGroupMessages(result)
     }
   },[gettingData,selectedGroup])
+  
   return (
-    <div className="w-full grow pt-2 overflow-hidden overflow-y-scroll">
+    <div  className="w-full  grow pt-2 overflow-hidden overflow-y-scroll">
      {
       selectedChat !== null && selectedGroup === null ? 
-      <div className="p-2 flex flex-col gap-4  justify-center">
-      {isFetching ? "" : messages?.map((msg) => <Message key={msg._id} message={msg} />)}
+      <div  className="p-2 flex flex-col gap-4  justify-center">
+      {isFetching ? "" : messages?.map((msg) => <Message  key={msg._id} message={msg} />)}
     </div> : 
-     <div className="p-2 flex flex-col gap-4  justify-center">
-     {gettingData ? "" : groupMessages?.map((msg) => <Message key={msg._id} message={msg} />)}
+     <div  className="p-2 flex flex-col gap-4  justify-center">
+     {gettingData ? "" : groupMessages?.map((msg) => <Message  key={msg._id} message={msg} />)}
    </div>
      }
     </div>

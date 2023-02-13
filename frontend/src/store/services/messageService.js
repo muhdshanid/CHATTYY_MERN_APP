@@ -23,27 +23,7 @@ const messageService = createApi({
                         body:data
                     }
                 },
-                invalidatesTags:["messages"]
-            }),
-             createNewAudio: builder.mutation({
-                query:(data) => {
-                    return {
-                        url:`pmsg/upload-audio/${data.chatId}`,
-                        method:"POST",
-                        body:data.formData
-                    }
-                },
-                invalidatesTags:["messages"]
-            }),
-             createNewImageMessage: builder.mutation({
-                query:(data) => {
-                    return {
-                        url:`pmsg/upload-image/${data.chatId}`,
-                        method:"POST",
-                        body:data.formData
-                    }
-                },
-                invalidatesTags:["messages"]
+                // invalidatesTags:["messages"]
             }),
              createNewGroupMessage: builder.mutation({
                 query:(data) => {
@@ -53,7 +33,7 @@ const messageService = createApi({
                         body:data
                     }
                 },
-                invalidatesTags:["messages"]
+                // invalidatesTags:["messages"]
             }),
             fetchPersonalMessages: builder.query({
                 query:(chatId) => {
@@ -79,7 +59,7 @@ const messageService = createApi({
 })
 export const {useFetchPersonalMessagesQuery,useFetchGroupMessagesQuery
 ,useCreateNewMessageMutation,useCreateNewGroupMessageMutation,
-useCreateNewAudioMutation,useCreateNewImageMessageMutation} = messageService
+} = messageService
 
 export default messageService
 

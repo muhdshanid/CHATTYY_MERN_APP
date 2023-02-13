@@ -15,11 +15,11 @@ const CenterMain = () => {
    })
   return (
   <>
-    <div className={`${infoPageOpen ? "w-full" : " w-full"}  flex `}>
+    <div  className={`${infoPageOpen ? "w-full" : " w-full"} hidden sm:flex `}>
       {
         selectedChat !== null  ?<> <div className={`${infoPageOpen ? "w-[90%]" : 'w-full'} transition-all flex flex-col justify-between`}>
         <CenterNav selectedGroup={selectedGroup} selectedChat={selectedChat}/>
-        <MessagesArea selectedGroup={selectedGroup} selectedChat={selectedChat}/>
+        <MessagesArea  selectedGroup={selectedGroup} selectedChat={selectedChat}/>
         <MessageInput selectedGroup={selectedGroup} selectedChat={selectedChat}/>
         </div>
       {

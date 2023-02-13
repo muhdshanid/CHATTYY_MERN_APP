@@ -5,17 +5,17 @@ import GroupChatModel from "../models/GroupChatModel.js";
 
 export const createMessage = asyncHandler(async (req, res) => {
   try {
-    const { content, groupChatId } = req.body;
-    if (!content || !groupChatId) {
+    const { message, groupChatId } = req.body;
+    if (!message || !groupChatId) {
       console.log("Invalid data passed into request");
       return res.sendStatus(400);
     }
-    let message = {
+    let msg = {
       sender: req.userId,
-      content,
+      message,
       chat: groupChatId,
     };
-    let newMessage = await GroupMessageModel.create(message);
+    let newMessage = await GroupMessageModel.create(msg);
     newMessage = await newMessage.populate("sender", "name profile email");
     newMessage = await newMessage.populate("chat");
     newMessage = await UserModel.populate(newMessage, {
