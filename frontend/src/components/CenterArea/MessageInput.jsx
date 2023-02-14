@@ -10,7 +10,9 @@ import axios from 'axios'
 import {AiOutlineLink, AiOutlineVideoCameraAdd} from 'react-icons/ai'
 import { ImSpinner9 } from 'react-icons/im';
 import { IoMdClose } from 'react-icons/io';
-const MessageInput = () => {
+import { useSelector } from 'react-redux';
+const MessageInput = ({socket}) => {
+  const {user} = useSelector(state => state.authReducer)
   const { messages,selectedGroup, setMessages,selectedChat ,groupMessages,
     setGroupMessages} = useContext(DataContext);
   const [message, setMessage] = useState("")
@@ -51,11 +53,18 @@ const MessageInput = () => {
   const hiddenVideoFileInput = useRef(null) 
   const hiddenGroupFileInput = useRef(null) 
   const hiddenGroupVideoFileInput = useRef(null) 
+
   const handleSend = () => {
     if(message !== ""){
-      sendMessage({message:{type:"text",message},chatId:selectedChat._id})
-      setMessage('')
-      setMessages([...messages,message])
+      let otherUser = selectedChat?.users?.filter(usr => usr._id !== user._id)
+        socket.current.emit("sendMsg",{
+          receiver:otherUser[0]?.name,
+          message:message,
+          type:"text"
+        }) 
+        sendMessage({message:{type:"text",message},chatId:selectedChat._id})
+        setMessage('')
+        // setMessages([...messages,message])
     }
   }
   const handleGroupImageUpload = async(event) => {
@@ -152,11 +161,13 @@ const MessageInput = () => {
     <div className='w-full rounded-tr-lg  rounded-tl-lg bg-white shadow-lg  shadow-black'>
         { selectedChat?._id && selectedGroup === null ?
           <div className='flex relative  items-center py-2 px-4 gap-2'>
-            <InputEmoji
+            {/* <InputEmoji
                 value={message}
                 onChange={handleChange}
                 placeholder="Type a message"
-              />
+              /> */}
+              <input value={message} className="Type a message"
+                onChange={(e)=>setMessage(e.target.value)} type="text" />
             <div className='flex  items-center'>
                 <div className='rounded-full  cursor-pointer p-2 hover:bg-gray-100'>
                   <AiOutlineLink className='text-gray-500' size={25} onClick={()=>setIsOptionsPopup(prev => !prev)} />
@@ -227,12 +238,13 @@ const MessageInput = () => {
                }
                 </div>
             </div>
-            <div className='rounded-full cursor-pointer  flex items-center justify-center bg p-1'>
+            <div onClick={handleSend} className='rounded-full cursor-pointer
+              flex items-center justify-center bg p-1'>
               {
                 imageUploading || videoUploading || res?.isLoading ? 
                 <ImSpinner9 size={27} color="white" className=" animate-spin"/>
                 :
-            <IoPaperPlaneSharp onClick={handleSend} size={25} 
+            <IoPaperPlaneSharp  size={25} 
             className="text-white"/>
               }
             </div>

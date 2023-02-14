@@ -3,7 +3,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { DataContext } from '../../context/DataProvider'
 
 const RightSideNav = () => {
-    const { infoPageOpen,setInfoPageOpen} = useContext(DataContext)
+    const { setInfoPageOpen} = useContext(DataContext)
 
   return (
     <div className='bg h-[4.5rem]  flex gap-2 items-end'>

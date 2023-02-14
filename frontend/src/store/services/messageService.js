@@ -42,7 +42,7 @@ const messageService = createApi({
                         method:"GET",
                     }
                 },
-                providesTags:["messages"]
+                // providesTags:["messages"]
             }),
             fetchGroupMessages: builder.query({
                 query:(chatId) => {
@@ -51,7 +51,7 @@ const messageService = createApi({
                         method:"GET",
                     }
                 },
-                providesTags:["messages"]
+                // providesTags:["messages"]
             }),
            
         }

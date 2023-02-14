@@ -10,6 +10,7 @@ import personalMessageRouter from './routes/personalMessageRoutes.js'
 import groupChatRouter from './routes/groupChatRoutes.js'
 import groupMessageRouter from './routes/groupMessageRoutes.js'
 import userRouter from './routes/userRoutes.js'
+import { Server } from 'socket.io'
  
 dotenv.config()
 const app = express()
@@ -31,6 +32,51 @@ app.use("/api/gmsg",groupMessageRouter)
 app.use(notFound)
 app.use(errorHandler)
 
- app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
     console.log(`Server running on port ${PORT}`);
+})
+
+const io =new  Server(server,{
+    cors:{
+        origin:"http://localhost:3000",
+        credetials:true
+    }
+})
+
+let onlineUsers = []
+
+const addNewUser = (username,socketId)=> {
+    !onlineUsers.some(user => user.username === username) && onlineUsers.push({username,socketId})
+}
+const removeUser = (socketId) => {
+    onlineUsers = onlineUsers.filter(user => user.socketId !== socketId)
+}
+
+const getUser = (username) => {
+    return onlineUsers.find(user => user.username === username)
+}
+
+io.on("connection", (socket)=>{
+    socket.on("newUser",(username)=>{
+        console.log(username); 
+        addNewUser(username,socket.id)
+    })
+    socket.on("sendMsg",(data)=>{
+        const sendUserSocket = getUser(data.receiver)
+        if(sendUserSocket){
+            const msg = {message:data.message,type:data.type}
+            socket.to(sendUserSocket.socketId).emit("msg-receive",msg)
+        }
+    })
+    // socket.on("sendNotification",({senderName,receiverName,type}) => {
+    //     const receiver = getUser(receiverName)
+    //     socket.to(receiver.socketId).emit("getNotification",{
+    //         senderName,
+    //         type  
+    //     })
+    // })
+    socket.on("disconnect",()=>{
+        removeUser(socket.id)  
+    })
+
 })
