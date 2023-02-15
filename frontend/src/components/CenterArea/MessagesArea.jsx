@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { DataContext } from "../../context/DataProvider";
+import { useSocket } from "../../context/SocketProvider";
 import { useFetchGroupMessagesQuery, useFetchPersonalMessagesQuery } from "../../store/services/messageService";
 import Message from "./Message";
 
-const MessagesArea = ({ socket,selectedChat,selectedGroup }) => {
+const MessagesArea = ({ selectedChat,selectedGroup }) => {
+  const {socket} = useSocket()
   const { data, isFetching } = useFetchPersonalMessagesQuery(selectedChat?._id);
   const { data:result, isFetching:gettingData } = useFetchGroupMessagesQuery(selectedGroup?._id);
   const { messages, setMessages ,groupMessages,
@@ -23,10 +25,9 @@ const MessagesArea = ({ socket,selectedChat,selectedGroup }) => {
     }
   },[gettingData,selectedGroup])
   useEffect(()=>{
-    if(socket.current){
-      socket.current.on("msg-receive",(msg)=>{
-        console.log(msg,"socketmasg");
-        setArrivalMessage({message:{type:msg.type,message:msg.message}})
+    if(socket){
+      socket.on("msg-receive",(msg)=>{
+        setArrivalMessage({message:{type:msg.type,message:msg.message,caption:msg.caption}})
       })
     }
   },[arrivalMessage,messages])

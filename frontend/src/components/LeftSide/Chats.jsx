@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { BiSearch } from "react-icons/bi";
 import {format} from 'timeago.js'
 import { FaCircle } from "react-icons/fa";
-import { HiOutlineArrowLeft } from "react-icons/hi";
 import {BsCameraVideoFill, BsImageFill} from 'react-icons/bs'
 import { useSelector } from "react-redux";
 import {MdSmsFailed} from 'react-icons/md'
 import { DataContext } from "../../context/DataProvider";
 import {ImSpinner9} from 'react-icons/im'
 import { useFetchGroupChatsQuery, useFetchPersonalChatsQuery } from "../../store/services/chatServices";
+import { IoSearchCircleSharp } from "react-icons/io5";
 const Chats = () => {
   const {setSelectedChat,
     setSelectedGroup,setSearchPageOpen,selectedChat
     ,setAddGroupMembersPageOpen,selectedGroup} = useContext(DataContext)
-  const [inputActive, setInputActive] = useState(false);
   const [personalChats, setPersonalChats] = useState([]);
   const [isPeoplesList, setIsPeoplesList] = useState(true)
   const [groupsChats, setGroupsChats] = useState([])
+  const [search, setSearch] = useState("")
   const {user} = useSelector(state => state.authReducer)
   const { data, isFetching } = useFetchPersonalChatsQuery();
   const {data : result,isFetching : gettingData,refetch} = useFetchGroupChatsQuery()
@@ -34,24 +33,22 @@ const Chats = () => {
   }, [gettingData, result]);
   return (
     <div className="flex  flex-col gap-4">
-      <div className={`p-2 mt-2 items-center gap-2 shadow-md bg-white rounded-lg flex`}>
-        {!inputActive ? (
-          <BiSearch size={27} className="transition-all  color" />
-        ) : (
-          <HiOutlineArrowLeft
-            onClick={() => setInputActive(false)}
-            size={27}
-            className="transition-all  cursor-pointer color"
+      <div className="p-2 mt-2 items-center gap-2 shadow-xl bg-white rounded-lg flex">
+        <div>
+            <button
+              className="px-2 py-1  rounded-full  text-white"
+            >
+              <IoSearchCircleSharp size={30} className="bg rounded-full" color="white"/>
+            </button>
+          </div>
+          <input
+            value={search}
+            onChange={(e) =>setSearch(e)}
+            type="text"
+            placeholder="Find an angel..."
+            className=" w-full px-1 placeholder:text-purple-300 border-none rounded-full outline-none"
           />
-        )}
-        <input
-          onBlur={() => setInputActive(false)}
-          onClick={() => setInputActive(true)}
-          type="text"
-          placeholder="Find an angel..."
-          className=" w-full  placeholder:text-purple-300 border-none rounded-lg outline-none"
-        />
-      </div>
+        </div>
       <div className="flex items-center  justify-center gap-4 ">
         <div onClick={()=>setIsPeoplesList(true)} className={`relative rounded-lg
          py-2 px-2  ${isPeoplesList ? "shadow-md " : " shadow-sm"} cursor-pointer`}>
@@ -215,9 +212,6 @@ const Chats = () => {
                         </>
                         : ""
               }
-               {/* {chat?.latestMessage?.message.message.length > 25
-                      ? chat?.latestMessage?.message.message.substring(0, 26) + "..."
-                      : chat?.latestMessage?.message.message} */}
               </p>
             </div>
           { chat.latestMessage && <div className="relative flex flex-col mt-2 items-center justify-end gap-1">
