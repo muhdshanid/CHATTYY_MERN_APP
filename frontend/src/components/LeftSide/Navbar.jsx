@@ -20,9 +20,6 @@ const Navbar = () => {
           />
         </div>
         <div className="flex ">
-          <div className="rounded-full cursor-pointer p-2 hover:bg-gray-100">
-            <AiOutlineLoading3Quarters className="color" size={27} />
-          </div>
           <div
             onClick={() => setSearchPageOpen(true)}
             className="rounded-full cursor-pointer p-2 hover:bg-gray-100"

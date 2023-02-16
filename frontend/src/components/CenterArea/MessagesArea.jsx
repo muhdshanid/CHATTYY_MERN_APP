@@ -13,6 +13,7 @@ const MessagesArea = ({ selectedChat,selectedGroup }) => {
   const { data:result, isFetching:gettingData } = useFetchGroupMessagesQuery(selectedGroup?._id);
   const { messages, setMessages ,groupMessages,
     setGroupMessages} = useContext(DataContext);
+    console.log(groupMessages);
     const [arrivalMessage, setArrivalMessage] = useState(null)
   useEffect(() => {
     if (isFetching === false) {
@@ -27,7 +28,7 @@ const MessagesArea = ({ selectedChat,selectedGroup }) => {
   useEffect(()=>{
     if(socket){
       socket.on("msg-receive",(msg)=>{
-        setArrivalMessage({message:{type:msg.type,message:msg.message,caption:msg.caption}})
+        setArrivalMessage({message:{type:msg.type,profile:msg.profile,message:msg.message,caption:msg.caption}})
       })
     }
   },[arrivalMessage,messages])

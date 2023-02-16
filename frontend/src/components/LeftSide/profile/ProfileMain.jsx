@@ -4,9 +4,9 @@ import { ImSpinner9 } from "react-icons/im";
 import { MdModeEditOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
-import { useUserUpdateMutation } from "../../store/services/userServices";
+import { useUserUpdateMutation } from "../../../store/services/userServices";
 import { useEffect } from "react";
-import { setUser } from "../../store/reducers/authReducer";
+import { setUser } from "../../../store/reducers/authReducer";
 const ProfileMain = () => {
     const {user} = useSelector(state => state.authReducer)
     const [image, setImage] = useState("")

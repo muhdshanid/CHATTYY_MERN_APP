@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { DataContext } from '../../context/DataProvider';
+import { DataContext } from '../../../context/DataProvider';
 
 const MediaMainPage = ({selectedChat,selectedGroup}) => {
     const { messages ,groupMessages,} = useContext(DataContext);

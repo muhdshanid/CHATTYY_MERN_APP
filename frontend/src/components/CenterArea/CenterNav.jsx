@@ -1,5 +1,5 @@
-import React, { useCallback, useContext } from "react";
-import { useEffect } from "react";
+import React, {useContext } from "react";
+import { BiExit } from "react-icons/bi";
 import { IoMdCall, IoMdMore, IoMdVideocam } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,23 +14,8 @@ const CenterNav = ({ selectedChat, selectedGroup }) => {
   const { user } = useSelector((state) => state.authReducer);
   let otherUser = selectedChat?.users?.filter((usr) => usr._id !== user._id);
   const createVideoCall = () => {
-    // if(socket){
-    //     socket.emit("join-room",{roomId:selectedChat?._id,email:user?.email})
-    // }
     navigate(`/room/${selectedChat?._id}`);
   };
-  const handleRoomJoined = useCallback(
-    ({ roomId }) => {
-      navigate(`/video-call/${roomId}`);
-    },
-    [navigate]
-  );
-  useEffect(() => {
-    socket.on("joined-room", handleRoomJoined);
-    return () => {
-      socket.off("joined-room", handleRoomJoined);
-    };
-  }, [handleRoomJoined, socket]);
   return (
     <div className="w-full h-16 rounded-lg px-2  shadow-sm">
       {selectedChat !== null && selectedGroup === null ? (
@@ -93,7 +78,7 @@ const CenterNav = ({ selectedChat, selectedGroup }) => {
           </div>
           <div className="flex  pr-4">
             <div className="rounded-full p-2 hover:bg-gray-100">
-              <IoMdMore size={27} className="color" />
+              <IoMdMore  size={27} className="color" />
             </div>
           </div>
         </div>

@@ -3,7 +3,6 @@ import './App.css'
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import VideoCall from "./pages/VideoCall";
 import RoomPage from "./room/RoomPage";
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        {/* <Route path="/video-call/:id" element={<VideoCall/>}/> */}
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/room/:roomID" element={<RoomPage/>}/>

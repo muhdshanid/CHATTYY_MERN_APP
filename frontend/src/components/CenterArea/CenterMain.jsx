@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import { DataContext } from '../../context/DataProvider'
-
+import RightSide from '../RightSide/RightSide'
 import CenterNav from './CenterNav'
-import MessageInput from './MessageInput'
+import MessageInput from './input/MessageInput'
 import MessagesArea from './MessagesArea'
 import { useTransition,animated } from "react-spring";
-import RightSide from '../RightSide/RightSide'
 import { useSelector } from 'react-redux'
 import { useSocket } from '../../context/SocketProvider'
 import { AiFillWechat } from 'react-icons/ai'

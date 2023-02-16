@@ -1,13 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import {format} from 'timeago.js'
 import { useSelector } from "react-redux";
 const Message = ({message}) => {
   const {user} = useSelector(state => state.authReducer)
   let messageTime = format(message?.createdAt)
-    const scrollRef = useRef()
-    useEffect(()=>{
-      scrollRef.current?.scrollIntoView({behavior:"smooth"})
-    },[message])
   return (
     <div>
     {
@@ -18,7 +14,7 @@ const Message = ({message}) => {
           className="w-10
            h-10
               rounded-full shadow-xl"
-          src={message?.sender?.profile}
+          src={message?.message?.profile ? message?.message?.profile : message?.sender?.profile}
           alt="profile"
         />
       </div>}

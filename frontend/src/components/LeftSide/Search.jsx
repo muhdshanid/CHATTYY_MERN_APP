@@ -57,7 +57,7 @@ const Search = () => {
             value={search}
             onChange={(e) =>onChange(e)}
             type="text"
-            placeholder="Find an angel..."
+            placeholder="Find a user..."
             className=" w-full px-1 placeholder:text-purple-300 border-none rounded-full outline-none"
           />
          

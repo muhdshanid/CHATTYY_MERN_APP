@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState } from 'react'
 import { useEffect } from 'react';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
-import { DataContext } from '../../context/DataProvider';
-import { useCreateGroupMutation } from '../../store/services/chatServices';
+import { DataContext } from '../../../context/DataProvider';
+import { useCreateGroupMutation } from '../../../store/services/chatServices';
 import axios from 'axios'
 import { ImSpinner9 } from 'react-icons/im';
 

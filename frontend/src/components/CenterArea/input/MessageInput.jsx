@@ -1,8 +1,8 @@
 
 import { useContext } from 'react';
-import { DataContext } from '../../context/DataProvider';
-import GroupMessageInput from './input/GroupMessageInput'
-import PersonalMessageInput from './input/PersonalMessageInput';
+import { DataContext } from '../../../context/DataProvider';
+import GroupMessageInput from './GroupMessageInput'
+import PersonalMessageInput from './PersonalMessageInput';
 const MessageInput = () => {
   const {selectedGroup,selectedChat ,} = useContext(DataContext);
 

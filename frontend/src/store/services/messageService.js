@@ -33,7 +33,7 @@ const messageService = createApi({
                         body:data
                     }
                 },
-                // invalidatesTags:["messages"]
+                invalidatesTags:["messages"]
             }),
             fetchPersonalMessages: builder.query({
                 query:(chatId) => {
@@ -51,7 +51,7 @@ const messageService = createApi({
                         method:"GET",
                     }
                 },
-                // providesTags:["messages"]
+                providesTags:["messages"]
             }),
            
         }

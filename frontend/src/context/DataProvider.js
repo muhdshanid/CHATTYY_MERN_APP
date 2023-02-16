@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
   const [selectedGroup, setSelectedGroup] = useState(null)
   const [messages, setMessages] = useState([]);
   const [groupMessages, setGroupMessages] = useState([])
+  const [addMemberPage, setAddMemberPage] = useState(false)
   const [selectedUsers, setSelectedUsers] = useState([])
   const [mediaPageOpen, setMediaPageOpen] = useState(false)
   const [createGroupPageOpen, setCreateGroupPageOpen] = useState(false);
@@ -17,6 +18,8 @@ export const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
+        addMemberPage,
+        setAddMemberPage,
         mediaPageOpen,
         setMediaPageOpen,
         selectedUsers, 

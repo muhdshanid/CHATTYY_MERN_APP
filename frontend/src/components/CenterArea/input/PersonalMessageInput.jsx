@@ -7,6 +7,7 @@ import axios from 'axios'
 import {AiOutlineLink, AiOutlineVideoCameraAdd} from 'react-icons/ai'
 import { ImSpinner9 } from 'react-icons/im';
 import { IoMdClose } from 'react-icons/io';
+import { useTransition,animated } from "react-spring";
 import { useSelector } from 'react-redux';
 import { FaSmile } from 'react-icons/fa';
 import { useCreateNewMessageMutation, useFetchPersonalMessagesQuery } from '../../../store/services/messageService'
@@ -19,16 +20,19 @@ const PersonalMessageInput = () => {
     const [message, setMessage] = useState("")
     const [imageUploading, setImageUploading] = useState(false)
     const [isImageUploaded, setIsImageUploaded] = useState(false)
-    const [isOptionsPopup, setIsOptionsPopup] = useState(false)
+    const [isOptionsPopup, setIsOptionsPopup] = useState(false) 
     const [image, setImage] = useState("")
     const [isVideoUploaded, setIsVideoUploaded] = useState(false)
     const [caption, setCaption] = useState("")
-  
     const [videoCaption, setVideoCaption] = useState("")
     const [uploadVideoUrl, setUploadVideoUrl] = useState("")
-  
     const [sendMessage,res] = useCreateNewMessageMutation()
     const [videoUploading, setVideoUploading] = useState(false)
+    const transition = useTransition(isOptionsPopup,{
+      from:{x:0 ,y:100 ,opacity:0},
+      enter:{x:0 ,y:0 ,opacity:1},
+      leave:{x:0 ,y:100 ,opacity:0},
+     })
     const { data, isFetching ,refetch:refetchData} = useFetchPersonalMessagesQuery(selectedChat?._id);
     useEffect(()=>{
       if(res.isSuccess){
@@ -49,6 +53,7 @@ const PersonalMessageInput = () => {
         let otherUser = selectedChat?.users?.filter(usr => usr._id !== user._id)
           socket.emit("sendMsg",{
             receiver:otherUser[0]?.name,
+            profile:user.profile,
             message:message,
             type:"text"
           }) 
@@ -80,6 +85,7 @@ const PersonalMessageInput = () => {
           socket.emit("sendMsg",{
             receiver:otherUser[0]?.name,
             message:image,
+            profile:user.profile,
             type:"img",
             caption
           })
@@ -90,6 +96,7 @@ const PersonalMessageInput = () => {
           socket.emit("sendMsg",{
             receiver:otherUser[0]?.name,
             message:uploadVideoUrl,
+            profile:user.profile,
             type:"video",
             caption:videoCaption
           }) 
@@ -182,29 +189,35 @@ const PersonalMessageInput = () => {
                   </div>
                 </div>
                 }
-               {
-                isOptionsPopup && 
-                <div className='absolute transition-all rounded-full bg p-2 bottom-16 right-12'>
-                <div className='flex rounded-full bg-white p-2  items-center gap-6 flex-col'>
-                <BiImageAdd onClick={(e)=>handleClick(e)} size={25} className="text-gray-500"/>
-                <input 
-                ref={hiddenFileInput}
-                onChange={handleImageUpload} accept="image/*" type="file" className='hidden' />
-                  <AiOutlineVideoCameraAdd  onClick={(e)=>handleVideoClick(e)} className="text-gray-500" size={25}/>
-                <input 
-                ref={hiddenVideoFileInput}
-                onChange={handleVideoUpload} accept="video/*"  type="file" className='hidden' />
-
-                  <TiDocumentAdd className="text-gray-500"  size={25}/>
-                </div>
-              </div>
+               
+                {
+                  transition((style,item)=>
+                    item ? <animated.div style={style}  className={`transition-all rounded-full
+                    absolute bg p-2 bottom-16 right-12
+                     `}>
+                     <div className=' '>
+                     <div className='flex rounded-full bg-white p-2  items-center gap-6 flex-col'>
+                     <BiImageAdd onClick={(e)=>handleClick(e)} size={25} className="text-gray-500"/>
+                     <input 
+                     ref={hiddenFileInput}
+                     onChange={handleImageUpload} accept="image/*" type="file" className='hidden' />
+                       <AiOutlineVideoCameraAdd  onClick={(e)=>handleVideoClick(e)} className="text-gray-500" size={25}/>
+                     <input 
+                     ref={hiddenVideoFileInput}
+                     onChange={handleVideoUpload} accept="video/*"  type="file" className='hidden' />
+     
+                       <TiDocumentAdd className="text-gray-500"  size={25}/>
+                     </div>
+                   </div>
+                    </animated.div>  : ""
+                  ) 
                }
                 </div>
             </div>
             <div onClick={handleSend} className=' cursor-pointer
               flex items-center justify-center p-1'>
               {
-                imageUploading || videoUploading || res?.isLoading ? 
+                imageUploading || videoUploading ? 
                 <ImSpinner9 size={27} color="black" className=" animate-spin"/>
                 :
             <IoSend  size={25} 

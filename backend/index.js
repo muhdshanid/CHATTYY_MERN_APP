@@ -56,8 +56,6 @@ const getUser = (username) => {
     return onlineUsers.find(user => user.username === username)
 }
 
-const emailToSocketMapping = new Map()
-const socketToEmailMapping = new Map()
 io.on("connection", (socket)=>{
     socket.on("newUser",(username)=>{
         addNewUser(username,socket.id)
@@ -65,29 +63,9 @@ io.on("connection", (socket)=>{
     socket.on("sendMsg",(data)=>{
         const sendUserSocket = getUser(data.receiver)
         if(sendUserSocket){
-            const msg = {message:data.message,type:data.type,caption:data.caption}
+            const msg = {message:data.message,profile:data.profile,type:data.type,caption:data.caption}
             socket.to(sendUserSocket.socketId).emit("msg-receive",msg)
         }
-    })
-    socket.on("join-room",data => {
-        const {email,roomId} = data
-        console.log("user",email,"joined room",roomId);
-        emailToSocketMapping.set(email,socket.id)
-        socketToEmailMapping.set(socket.id,email)
-        socket.join(roomId)
-        socket.emit("joined-room",{roomId})
-        socket.broadcast.to(roomId).emit("user-joined",{email})
-    })
-    socket.on("call-user",data => {
-        const {email,offer} = data
-        const fromEmail = socketToEmailMapping.get(socket.id)
-        const socketId = emailToSocketMapping.get(email)
-        socket.to(socketId).emit("incomming-call",{from:fromEmail,offer})
-    })
-    socket.on("call-accepted",data => {
-        const {email,ans} = data
-        const socketId = emailToSocketMapping.get(email)
-        socket.to(socketId).emit("call-accepted",{ans})
     })
     socket.on("disconnect",()=>{
         // removeUser(socket.id)  

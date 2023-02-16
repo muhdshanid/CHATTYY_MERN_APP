@@ -13,19 +13,22 @@ import { IoSearchCircleSharp } from "react-icons/io5";
 const Chats = () => {
   const {setSelectedChat,
     setSelectedGroup,setSearchPageOpen,selectedChat
-    ,setAddGroupMembersPageOpen,selectedGroup} = useContext(DataContext)
+    ,setAddGroupMembersPageOpen,selectedGroup,messages} = useContext(DataContext)
   const [personalChats, setPersonalChats] = useState([]);
   const [isPeoplesList, setIsPeoplesList] = useState(true)
   const [groupsChats, setGroupsChats] = useState([])
   const [search, setSearch] = useState("")
   const {user} = useSelector(state => state.authReducer)
-  const { data, isFetching } = useFetchPersonalChatsQuery();
-  const {data : result,isFetching : gettingData,refetch} = useFetchGroupChatsQuery()
+  const { data, isFetching ,refetch} = useFetchPersonalChatsQuery();
+  const {data : result,isFetching : gettingData} = useFetchGroupChatsQuery()
   useEffect(() => {
     if(isFetching === false){
       setPersonalChats(data);
     }
   }, [data, isFetching]);
+  useEffect(()=>{
+    refetch()
+  },[messages, refetch])
   useEffect(() => {
     if(gettingData === false){
       setGroupsChats(result);
@@ -45,7 +48,7 @@ const Chats = () => {
             value={search}
             onChange={(e) =>setSearch(e)}
             type="text"
-            placeholder="Find an angel..."
+            placeholder="Find a user..."
             className=" w-full px-1 placeholder:text-purple-300 border-none rounded-full outline-none"
           />
         </div>
@@ -127,10 +130,6 @@ const Chats = () => {
             </p>
           </div>
          { chat.latestMessage && <div className="relative flex flex-col mt-2 items-center justify-end gap-1">
-            <FaCircle
-              size={20}
-              className={`${selectedChat?._id === chat?._id ? "text-white" : "color"} justify-center`}
-            />
             <p
               className={`font-normal text-sm ${selectedChat?._id === chat?._id ? "text-white" : ""}`}
             >
@@ -138,15 +137,6 @@ const Chats = () => {
                 latestMessageTime 
               }
             </p>
-            <div className="absolute top-[2px] right-[1.6rem]">
-              <p
-                className={`${
-                  selectedChat?._id === chat?._id ? "text-black" : "text-white"
-                } text-xs font-semibold `}
-              >
-                2
-              </p>
-            </div>
           </div>}
         </div>
         )})
@@ -214,25 +204,12 @@ const Chats = () => {
               }
               </p>
             </div>
-          { chat.latestMessage && <div className="relative flex flex-col mt-2 items-center justify-end gap-1">
-              <FaCircle
-                size={20}
-                className={`${ selectedGroup?._id === chat?._id  ? "text-white" : "color"} justify-center`}
-              />
+          { chat.latestMessage && <div className="relative  flex  mt-2 items-end justify-end gap-1">
               <p
                 className={`font-normal text-sm ${ selectedGroup?._id === chat?._id  ? "text-white" : ""}`}
               >
                {latestMessageTime}
               </p>
-              <div className="absolute top-[2px] right-[1.6rem]">
-                <p
-                  className={`${
-                     selectedGroup?._id === chat?._id  ? "text-black" : "text-white"
-                  } text-xs font-semibold `}
-                >
-                  2
-                </p>
-              </div>
             </div>}
            </div>
           )

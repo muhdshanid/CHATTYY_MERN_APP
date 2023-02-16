@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { HiOutlineArrowLeft } from 'react-icons/hi'
-import { DataContext } from '../../context/DataProvider'
+import { DataContext } from '../../../context/DataProvider'
 
 const ProfileNav = () => {
     const {setProfilePageOpen} = useContext(DataContext)

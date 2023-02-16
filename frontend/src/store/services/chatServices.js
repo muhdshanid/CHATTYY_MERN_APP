@@ -25,6 +25,36 @@ const chatService = createApi({
                 },
                 invalidatesTags:["chats"]
             }),
+            updateGroup: builder.mutation({
+                query:(data) => {
+                    return {
+                        url:`gchat/edit-group/${data.id}`,
+                        method:"PUT",
+                        body:data.data
+                    }
+                },
+                invalidatesTags:["chats"]
+            }),
+            addMembers: builder.mutation({
+                query:(data) => {
+                    return {
+                        url:`gchat/add-members`,
+                        method:"PUT",
+                        body:data
+                    }
+                },
+                invalidatesTags:["chats"]
+            }),
+            removeUser: builder.mutation({
+                query:(data) => {
+                    return {
+                        url:`gchat/remove-member`,
+                        method:"PUT",
+                        body:data
+                    }
+                },
+                invalidatesTags:["chats"]
+            }),
             createChat: builder.mutation({
                 query:(data) => {
                     return {
@@ -44,6 +74,15 @@ const chatService = createApi({
                 },
                 providesTags:["chats"]
             }),
+            getUsersToAdd: builder.query({
+                query: (data) => {
+                  return {
+                    url: `gchat/users-to-add/${data.groupId}?search=${data.search}`,
+                    method: "GET",
+                  };
+                },
+                providesTags: ["chats"],
+              }),
             fetchGroupChats: builder.query({
                 query:() => {
                     return {
@@ -57,7 +96,7 @@ const chatService = createApi({
     }
 })
 export const {useFetchPersonalChatsQuery,useFetchGroupChatsQuery,useCreateChatMutation,
-useCreateGroupMutation} = chatService
+useCreateGroupMutation,useUpdateGroupMutation,useRemoveUserMutation,useAddMembersMutation,useGetUsersToAddQuery} = chatService
 
 export default chatService
 

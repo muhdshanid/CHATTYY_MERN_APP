@@ -9,6 +9,7 @@ import {
   useFetchGroupMessagesQuery,
 } from "../../../store/services/messageService";
 import axios from "axios";
+import { useTransition,animated } from "react-spring";
 import { AiOutlineLink, AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { ImSpinner9 } from "react-icons/im";
 import { IoMdClose } from "react-icons/io";
@@ -29,6 +30,11 @@ const GroupMessageInput = () => {
   const hiddenGroupFileInput = useRef(null);
   const hiddenGroupVideoFileInput = useRef(null);
   const [sendGroupMessage, response] = useCreateNewGroupMessageMutation();
+  const transition = useTransition(isGroupOptionsPopup,{
+    from:{x:0 ,y:100 ,opacity:0},
+    enter:{x:0 ,y:0 ,opacity:1},
+    leave:{x:0 ,y:100 ,opacity:0},
+   })
   const {
     data: result,
     isFetching: gettingData,
@@ -208,8 +214,12 @@ const GroupMessageInput = () => {
               </div>
             </div>
           )}
-          {isGroupOptionsPopup && (
-            <div className="absolute transition-all rounded-full bg p-2 bottom-16 right-12">
+          {
+          transition((style,item)=>
+            item ? <animated.div style={style}  className={`absolute transition-all rounded-full bg p-2 bottom-16 right-12
+           
+             `}>
+               <div className="">
               <div className="flex rounded-full bg-white p-2  items-center gap-6 flex-col">
                 <BiImageAdd
                   onClick={(e) => handleGroupInputClick(e)}
@@ -238,7 +248,11 @@ const GroupMessageInput = () => {
                 <TiDocumentAdd className="text-gray-500" size={25} />
               </div>
             </div>
-          )}
+            </animated.div>  : ""
+          )
+        } 
+           
+      
         </div>
       </div>
       <div className="cursor-pointer  flex items-center justify-center  p-1">

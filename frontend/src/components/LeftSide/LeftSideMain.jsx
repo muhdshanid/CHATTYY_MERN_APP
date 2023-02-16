@@ -4,9 +4,9 @@ import { DataContext } from '../../context/DataProvider'
 import Chats from './Chats'
 import Navbar from './Navbar'
 import { useTransition,animated } from "react-spring";
-import Profile from './Profile'
+import Profile from './profile/Profile'
 import Search from './Search'
-import AddGroupMembers from './AddGroupMembers'
+import AddGroupMembers from './group/AddGroupMembers'
 const LeftSideMain = () => {
   const {profilePageOpen,searchPageOpen,addGroupMembersPageOpen} = useContext(DataContext)
   const transition = useTransition(profilePageOpen,{
